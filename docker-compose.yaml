@@ -1,0 +1,5 @@
+version: '3.8'
+services:
+  kong:
+    image: xpop:konggo
+    command: ['tail', '-f']
