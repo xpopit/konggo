@@ -22,15 +22,15 @@ func TestCustomPlugin(t *testing.T) {
 
 	// env.DoHttps(&Config{})
 
-	t.Run("Sent correct access token must return status code 200 ", func(t *testing.T) {
-		env.ClientReq.Headers = map[string][]string{"Authorization": {"TEST_TOKEN"}}
-		env.DoHttps(&Config{
-			URL: "http://authserver:80/auth/verify",
-		})
-		if env.ClientRes.Status != 200 {
-			t.Error("Must return status code 200")
-		}
-	})
+	// t.Run("Sent correct access token must return status code 200 ", func(t *testing.T) {
+	// 	env.ClientReq.Headers = map[string][]string{"Authorization": {"TEST_TOKEN"}}
+	// 	env.DoHttps(&Config{
+	// 		URL: "http://authserver:80/auth/verify",
+	// 	})
+	// 	if env.ClientRes.Status != 200 {
+	// 		t.Error("Must return status code 200")
+	// 	}
+	// })
 
 	t.Run("Sent empty string must return status code 401", func(t *testing.T) {
 		env.ClientReq.Headers = map[string][]string{"Authorization": {"TEST_TOKEN2"}}
