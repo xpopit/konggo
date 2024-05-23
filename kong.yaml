@@ -1,0 +1,15 @@
+_format_version: '3.0'
+_transform: true
+
+services:
+  - name: first-demo
+    url: https://httpbin.org/anything
+    routes:
+      - name: first-demo-route
+        paths:
+          - /test
+plugins:
+  - config:
+      message: hello from kong Go plugin
+    enabled: true
+    name: konggo
