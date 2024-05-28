@@ -1,5 +1,16 @@
 version: '3.8'
 services:
   kong:
-    image: xpop:konggo
-    command: ['tail', '-f']
+    # image: kong/kong-gateway:3.4.2.0
+    platform: linux/x86_64
+    image: xpop/kongo:3.4.2.11
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # command: ['tail', '-f']
+    # volumes:
+    #   - ./kongo:/usr/local/bin/kongo
+    env_file:
+      - .env
+    ports:
+      - '8000-8004:8000-8004'

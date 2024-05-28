@@ -8,5 +8,5 @@ COPY . .
 RUN go build -o kongo .
 
 FROM --platform=amd64 kong/kong-gateway:3.4.2.0 as kong
-COPY --from=builder /builder/kongo ./kong/
+COPY --from=builder /builder/kongo /usr/local/kong/
 USER kong

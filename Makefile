@@ -1,2 +1,2 @@
 build:
-	@go build -o konggo .
+	@go build -o kongo .
