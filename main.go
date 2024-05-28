@@ -8,30 +8,46 @@ import (
 	"github.com/Kong/go-pdk/server"
 )
 
-func main() {
-	server.StartServer(New, Version, Priority)
-}
+// type Config struct {
+// 	URL            string
+// 	ConnectTimeout int
+// 	SendTimeout    int
+// 	ReadTimeout    int
+// }
 
-var Version = "0.2"
-var Priority = 1
+// Version of the plugin
+const Version = "0.1.0"
+const Priority = 1000
+const PluginName = "konggo"
+
+const FailedResponse = `{"error": "%s is required"}`
 
 type Config struct {
-	Message string
+	HeaderKey string `json:"header_key"`
+}
+
+func main() {
+	err := server.StartServer(New, Version, Priority)
+	if err != nil {
+		log.Fatalf("Failed start %s plugin", PluginName)
+	}
 }
 
 func New() interface{} {
 	return &Config{}
 }
 
-func (conf Config) Access(kong *pdk.PDK) {
-	host, err := kong.Request.GetHeader("host")
+func (conf *Config) Access(kong *pdk.PDK) {
+	headerKey, err := kong.Request.GetHeader(conf.HeaderKey)
 	if err != nil {
 		log.Printf("Error reading 'host' header: %s", err.Error())
 	}
 
-	message := conf.Message
-	if message == "" {
-		message = "hello"
+	headerResponse := make(map[string][]string, 0)
+	headerResponse["Content-Type"] = []string{"application/json"}
+
+	if headerKey == "" {
+		// b := fmt.Sprintf(FailedResponse, conf.HeaderKey))
+		kong.Response.Exit(400, []byte(fmt.Sprintf(FailedResponse, conf.HeaderKey)), headerResponse)
 	}
-	kong.Response.SetHeader("x-hello-from-go", fmt.Sprintf("Go says %s to %s", message, host))
 }

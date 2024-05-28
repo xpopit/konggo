@@ -3,7 +3,7 @@ services:
   kong:
     # image: kong/kong-gateway:3.4.2.0
     platform: linux/x86_64
-    image: xpop/kongo:3.4.2.11
+    image: xpop/kongo:3.4.2.12
     build:
       context: .
       dockerfile: Dockerfile
