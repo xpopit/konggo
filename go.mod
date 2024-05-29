@@ -1,4 +1,4 @@
-module konggo
+module kongo
 
 go 1.22.2
 
